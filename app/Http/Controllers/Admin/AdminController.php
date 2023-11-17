@@ -40,6 +40,23 @@ class AdminController extends Controller
                 ->with('Welcome! Your account has been successfully created!');
         }
     }
+    function admin_login(){
+        return view('backend.layouts.login');
+    }
+    function login_admin(Request $request){
+        $request->validate([
+            'email' => 'required|max:255',
+            'password' => 'required|min:8',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->route('dashboard');
+        } else {
+            return back()->with('err', 'Email & Password Are Not Valid...');
+        }
+    }
 
     function dashboard(){
         return view('backend.home.home');
