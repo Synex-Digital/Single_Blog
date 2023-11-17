@@ -13,14 +13,15 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Data Table</h4>
+                        <h4 class="card-title">All Blogs</h4>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
                                 <thead>
                                     <tr>
-                                        <th>Category Name</th>
                                         <th>Image</th>
-                                        <th>Icon</th>
+                                        <th>Parent Category</th>
+                                        <th>Category</th>
+                                        <th>Blog Title</th>
                                         <th>SEO Title</th>
                                         <th>Action</th>
                                     </tr>
@@ -28,16 +29,15 @@
                                 <tbody>
                                     @foreach ($requests as $request)
                                         <tr>
-                                            <td>{{ $request->category_name }}</td>
                                             <td>
-                                                <img style="width: 50px;" src="{{ asset('files/category/'.$request->category_image) }}" alt="">
+                                                <img style="width: 50px;" src="{{ asset('files/blog/'.$request->blog_image) }}" alt="">
                                             </td>
-                                            <td>
-                                                <img style="width: 50px;" src="{{ asset('files/category/'.$request->category_icon) }}" alt="">
-                                            </td>
+                                            <td>{{ $request->category->parent_category_id }}</td>
+                                            <td>{{ $request->category->category_name }}</td>
+                                            <td>{{ $request->blog_title }}</td>
                                             <td>{{ $request->seo_title }}</td>
                                             <td>
-                                                <a href="{{ route('category.edit', $request->id) }}" class="btn btn-primary"><i class="fa fa-pencil color-muted m-r-5"></i></a>
+                                                <a href="{{ route('blog.edit', $request->id) }}" class="btn btn-primary"><i class="fa fa-pencil color-muted m-r-5"></i></a>
                                                 <a href="{{ route('category.destroy', $request->id) }}" class="btn btn-warning"><i class="fa fa-close color-danger"></i></a>
                                             </td>
                                         </tr>
@@ -45,9 +45,10 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Category Name</th>
                                         <th>Image</th>
-                                        <th>Icon</th>
+                                        <th>Parent Category</th>
+                                        <th>Category</th>
+                                        <th>Blog Title</th>
                                         <th>SEO Title</th>
                                         <th>Action</th>
                                     </tr>

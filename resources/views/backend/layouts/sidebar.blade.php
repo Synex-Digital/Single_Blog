@@ -20,24 +20,21 @@
                     <li><a href="{{ route('category.create') }}">Create Category</a></li>
                 </ul>
             </li>
-            <li class="nav-label">Apps</li>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-envelope menu-icon"></i> <span class="nav-text">Email</span>
+                    <i class="icon-envelope menu-icon"></i> <span class="nav-text">News Latter</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="./email-inbox.html">Inbox</a></li>
-                    <li><a href="./email-read.html">Read</a></li>
-                    <li><a href="./email-compose.html">Compose</a></li>
+                    <li><a href="{{ route('newslatter.create') }}">Create News Latter</a></li>
                 </ul>
             </li>
             <li>
                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">Apps</span>
+                    <i class="icon-screen-tablet menu-icon"></i><span class="nav-text">Blog</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="./app-profile.html">Profile</a></li>
-                    <li><a href="./app-calender.html">Calender</a></li>
+                    <li><a href="{{ route('blog.index') }}">Blogs List</a></li>
+                    <li><a href="{{ route('blog.create') }}">Create Blog</a></li>
                 </ul>
             </li>
             <li>
