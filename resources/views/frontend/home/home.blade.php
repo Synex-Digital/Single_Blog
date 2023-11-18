@@ -9,9 +9,11 @@
             <div class="col-lg-8">
                 
                 <!-- featured post large -->
+                @if($latest_blog)
                 <div class="post featured-post-lg">
                     <div class="details clearfix">
-                        <a href="" class="category-badge">{{ $latest_blog->category->category_name }}</a>
+                       
+                        <a href="" class="category-badge"> {{ $latest_blog->category->category_name }}</a>
                         <h2 class="post-title"><a href="blog-single.html">{{ $latest_blog->blog_title }}</a></h2>
                         <ul class="meta list-inline mb-0">
                             <li class="list-inline-item"><a href="#">Katen Doe</a></li>
@@ -24,7 +26,7 @@
                         </div>
                     </a>
                 </div>
-
+                @endif
             </div>
 
             <div class="col-lg-4">
@@ -618,7 +620,7 @@
                             <form action="{{ route('subscribe') }}" method="POST">
                                 @csrf
                                 <div class="mb-2">
-                                    <input class="form-control w-100 text-center" placeholder="Email address…" type="email" name="email">
+                                    <input class="form-control w-100 text-center" placeholder="Email address…" type="email" name="email" required>
                                 </div>
                                 <button class="btn btn-default btn-full" type="submit">Sign Up</button>
                             </form>

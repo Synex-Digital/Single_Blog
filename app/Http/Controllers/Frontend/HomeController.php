@@ -28,6 +28,9 @@ class HomeController extends Controller
     }
     function subscribe(Request $request){
 
+        $validated = $request->validate([
+            'email' => 'required',
+        ]);
         $user = '';
         if (Auth::user()) {
             $user = Auth::user()->id;
