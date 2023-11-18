@@ -11,4 +11,7 @@ class Blog extends Model
     function category(){
         return $this->belongsTo(Category::class, 'category_id');
     }
+    function admin(){
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
 }

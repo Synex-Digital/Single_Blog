@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/blog/details/{id}', [HomeController::class, 'blog_details'])->name('blog.details');
+Route::post('/subscribe', [HomeController::class, 'subscribe'])->name('subscribe');
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -40,3 +42,7 @@ Route::middleware('admin')->group(function () {
     Route::resource('/newslatter', NewslatterController::class);
     Route::resource('/blog', BlogController::class);
 });
+
+
+
+

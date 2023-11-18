@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="{{ asset('frontend') }}/css/simple-line-icons.css" type="text/css" media="all">
 	<link rel="stylesheet" href="{{ asset('frontend') }}/css/style.css" type="text/css" media="all">
 
+	
 	<!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -66,7 +67,7 @@
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-xl">
 				<!-- site logo -->
-				<a class="navbar-brand" href="index.html"><img src="{{ asset('frontend') }}/images/logo.svg" alt="logo" /></a> 
+				<a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset('frontend') }}/images/logo.svg" alt="logo" /></a> 
 
 				<div class="collapse navbar-collapse">
 					<!-- menus -->
