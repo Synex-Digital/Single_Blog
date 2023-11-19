@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('blog_description')->nullable();
             $table->longText('seo_description')->nullable();
             $table->string('seo_tags')->nullable();
+            $table->bigInteger('views')->default(0);
             $table->timestamps();
         });
     }
