@@ -38,7 +38,11 @@
                                             <td>{{ $request->seo_title }}</td>
                                             <td>
                                                 <a href="{{ route('category.edit', $request->id) }}" class="btn btn-primary"><i class="fa fa-pencil color-muted m-r-5"></i></a>
-                                                <a href="{{ route('category.destroy', $request->id) }}" class="btn btn-warning"><i class="fa fa-close color-danger"></i></a>
+                                                <form action="{{ route('category.destroy', $request->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit"  class="btn btn-warning"><i class="fa fa-close color-danger"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

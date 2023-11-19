@@ -23,7 +23,7 @@
 							<ul class="meta list-inline mb-0">
 								<li class="list-inline-item"><a href="#"><img style="width: 40px;" src="{{ asset('files/profile/'.$blog_detail->admin->profile) }}" class="author" alt="author"/>Katen Doe</a></li>
 								<li class="list-inline-item"><a href="#">Trending</a></li>
-								<li class="list-inline-item">29 March 2021</li>
+								<li class="list-inline-item">{{ \Carbon\Carbon::parse($blog_detail->from_date)->format('d M Y')}}</li>
 							</ul>
 						</div>
 						<!-- featured image -->
@@ -84,7 +84,7 @@
 
 					<!-- section header -->
 					<div class="section-header">
-						<h3 class="section-title">Comments (3)</h3>
+						<h3 class="section-title">Comments ({{ $total_comment }})</h3>
 						<img src="{{ asset('frontend') }}/images/wave.svg" class="wave" alt="wave" />
 					</div>
 					<!-- post comments -->
@@ -92,41 +92,22 @@
 
 						<ul class="comments">
 							<!-- comment item -->
+							@foreach ($comments as $comment)
 							<li class="comment rounded">
 								<div class="thumb">
-									<img src="{{ asset('frontend') }}/images/other/comment-1.png" alt="John Doe" />
+									@if ($comment->user_id)
+									<img style="width: 50px;" src="{{ asset('files/profile/'.$comment->admin->profile) }}" alt="John Doe" />
+									@endif
+									
 								</div>
 								<div class="details">
-									<h4 class="name"><a href="#">John Doe</a></h4>
-									<span class="date">Jan 08, 2021 14:41 pm</span>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae odio ut tortor fringilla cursus sed quis odio.</p>
-									<a href="#" class="btn btn-default btn-sm">Reply</a>
+									<h4 class="name"><a href="#">{{ $comment->commenter_name }}</a></h4>
+									<span class="date">{{ \Carbon\Carbon::parse($comment->from_date)->format('d M Y H:i:s')}}</span>
+									<p>{{ $comment->comment }}</p>
+									<a href="" class="btn btn-default btn-sm">Reply</a> 
 								</div>
 							</li>
-							<!-- comment item -->
-							<li class="comment child rounded">
-								<div class="thumb">
-									<img src="{{ asset('frontend') }}/images/other/comment-2.png" alt="John Doe" />
-								</div>
-								<div class="details">
-									<h4 class="name"><a href="#">Helen Doe</a></h4>
-									<span class="date">Jan 08, 2021 14:41 pm</span>
-									<p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
-									<a href="#" class="btn btn-default btn-sm">Reply</a>
-								</div>
-							</li>
-							<!-- comment item -->
-							<li class="comment rounded">
-								<div class="thumb">
-									<img src="{{ asset('frontend') }}/images/other/comment-3.png" alt="John Doe" />
-								</div>
-								<div class="details">
-									<h4 class="name"><a href="#">Anna Doe</a></h4>
-									<span class="date">Jan 08, 2021 14:41 pm</span>
-									<p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
-									<a href="#" class="btn btn-default btn-sm">Reply</a>
-								</div>
-							</li>
+							@endforeach
 						</ul>
 					</div>
 
@@ -140,42 +121,41 @@
 					<!-- comment form -->
 					<div class="comment-form rounded bordered padding-30">
 
-						<form id="comment-form" class="comment-form" method="post">
-				
+						<form action="{{ route('comment') }}" id="comment-form" class="comment-form" method="POST">
+							@csrf
+							<input type="hidden" name="blog_id" value="{{ $blog_detail->id }}">
 							<div class="messages"></div>
-							
 							<div class="row">
 
 								<div class="column col-md-12">
 									<!-- Comment textarea -->
 									<div class="form-group">
-										<textarea name="InputComment" id="InputComment" class="form-control" rows="4" placeholder="Your comment here..." required="required"></textarea>
+										<textarea name="comment" id="InputComment" class="form-control" rows="4" placeholder="Your comment here..." required="required" ></textarea>
 									</div>
 								</div>
 
 								<div class="column col-md-6">
 									<!-- Email input -->
 									<div class="form-group">
-										<input type="email" class="form-control" id="InputEmail" name="InputEmail" placeholder="Email address" required="required">
+										<input type="email" class="form-control" id="InputEmail" name="email" placeholder="Email address" required="required">
 									</div>
 								</div>
 
 								<div class="column col-md-6">
 									<!-- Name input -->
 									<div class="form-group">
-										<input type="text" class="form-control" name="InputWeb" id="InputWeb" placeholder="Website" required="required">
+										<input type="text" class="form-control" name="website" id="InputWeb" placeholder="Website">
 									</div>
 								</div>
 	
 								<div class="column col-md-12">
 									<!-- Email input -->
 									<div class="form-group">
-										<input type="text" class="form-control" id="InputName" name="InputName" placeholder="Your name" required="required">
+										<input type="text" class="form-control" id="name" name="name" placeholder="Your name" required="required">
 									</div>
 								</div>
 						
 							</div>
-	
 							<button type="submit" name="submit" id="submit" value="Submit" class="btn btn-default">Submit</button><!-- Submit Button -->
 	
 						</form>
@@ -210,56 +190,26 @@
 							</div>
 							<div class="widget-content">
 								<!-- post -->
-								<div class="post post-list-sm circle">
-									<div class="thumb circle">
-										<span class="number">1</span>
-										<a href="blog-single.html">
-											<div class="inner">
-												<img src="{{ asset('frontend') }}/images/posts/tabs-1.jpg" alt="post-title" />
-											</div>
-										</a>
+								@foreach ($popular_posts as $popular_post)
+									<div class="post post-list-sm circle">
+										<div class="thumb circle">
+											<span class="number">1</span>
+											<a href="blog-single.html">
+												<div class="inner">
+													<img style="width: 70px; height: 60px;;" src="{{ asset('files/blog/'.$popular_post->blog_image) }}" alt="post-title" />
+												</div>
+											</a>
+										</div>
+										<div class="details clearfix">
+											<h6 class="post-title my-0"><a href="{{ route('blog.details', ['id'=>$popular_post->id]) }}">{{ $popular_post->blog_title }}</a></h6>
+											<ul class="meta list-inline mt-1 mb-0">
+												<li class="list-inline-item">29 March 2021</li>
+											</ul>
+										</div>
 									</div>
-									<div class="details clearfix">
-										<h6 class="post-title my-0"><a href="blog-single.html">3 Easy Ways To Make Your iPhone Faster</a></h6>
-										<ul class="meta list-inline mt-1 mb-0">
-											<li class="list-inline-item">29 March 2021</li>
-										</ul>
-									</div>
-								</div>
+								@endforeach
 								<!-- post -->
-								<div class="post post-list-sm circle">
-									<div class="thumb circle">
-										<span class="number">2</span>
-										<a href="blog-single.html">
-											<div class="inner">
-												<img src="{{ asset('frontend') }}/images/posts/tabs-2.jpg" alt="post-title" />
-											</div>
-										</a>
-									</div>
-									<div class="details clearfix">
-										<h6 class="post-title my-0"><a href="blog-single.html">An Incredibly Easy Method That Works For All</a></h6>
-										<ul class="meta list-inline mt-1 mb-0">
-											<li class="list-inline-item">29 March 2021</li>
-										</ul>
-									</div>
-								</div>
-								<!-- post -->
-								<div class="post post-list-sm circle">
-									<div class="thumb circle">
-										<span class="number">3</span>
-										<a href="blog-single.html">
-											<div class="inner">
-												<img src="{{ asset('frontend') }}/images/posts/tabs-3.jpg" alt="post-title" />
-											</div>
-										</a>
-									</div>
-									<div class="details clearfix">
-										<h6 class="post-title my-0"><a href="blog-single.html">10 Ways To Immediately Start Selling Furniture</a></h6>
-										<ul class="meta list-inline mt-1 mb-0">
-											<li class="list-inline-item">29 March 2021</li>
-										</ul>
-									</div>
-								</div>
+								
 							</div>		
 						</div>
 
@@ -371,7 +321,7 @@
 						</div>
 
 						<!-- widget tags -->
-						<div class="widget rounded">
+						{{-- <div class="widget rounded">
 							<div class="widget-header text-center">
 								<h3 class="widget-title">Tag Clouds</h3>
 								<img src="{{ asset('frontend') }}/images/wave.svg" class="wave" alt="wave" />
@@ -383,7 +333,7 @@
 								<a href="#" class="tag">#Gallery</a>
 								<a href="#" class="tag">#Celebrities</a>
 							</div>		
-						</div>
+						</div> --}}
 
 					</div>
 

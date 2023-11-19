@@ -128,6 +128,13 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $category = Category::find($id);
-        return $category;
+        $image = $category->category_image;
+        $icon = $category->category_icon;
+        $image = base_path('public/files/category/' . $image);
+        $icon = base_path('public/files/category/' . $icon);
+        unlink($image);
+        unlink($icon);
+        $category->delete();
+        return back();
     }
 }

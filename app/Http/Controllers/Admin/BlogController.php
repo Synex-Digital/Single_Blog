@@ -121,6 +121,11 @@ class BlogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $blog = Blog::find($id);
+        $image = $blog->blog_image;
+        $image = base_path('public/files/blog/' . $image);
+        unlink($image);
+        $blog->delete();
+        return back()->with('succ', 'Blog Deleted...!!!');
     }
 }
